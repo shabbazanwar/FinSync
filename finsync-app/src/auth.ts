@@ -9,6 +9,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
+  // Auth.js only auto-trusts the request Host header on Vercel; every other
+  // host (Render, Railway, etc.) needs this explicit opt-in, since we set
+  // NEXTAUTH_URL ourselves and control what host the app is served on.
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
